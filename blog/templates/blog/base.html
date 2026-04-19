@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}TechBlog{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>TechBlog</h1>
+        <p>Blog de tecnología</p>
+        <hr>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <hr>
+        <p>Proyecto Django - Blog de Tecnología</p>
+    </footer>
+</body>
+</html>

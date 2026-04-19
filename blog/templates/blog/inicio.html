@@ -1,0 +1,19 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Inicio | TechBlog{% endblock %}
+
+{% block content %}
+<a href="{% url 'crear_post' %}">Crear nueva publicación</a>
+    <h2>Publicaciones recientes</h2>
+
+    {% for post in posts %}
+        <hr>
+        <h3>{{ post.titulo }}</h3>
+        <p><strong>Categoría:</strong> {{ post.categoria }}</p>
+        <p><strong>Autor:</strong> {{ post.autor }}</p>
+        <p><strong>Fecha:</strong> {{ post.fecha_publicacion }}</p>
+        <p>{{ post.resumen }}</p>
+    {% empty %}
+        <p>No hay publicaciones</p>
+    {% endfor %}
+{% endblock %}

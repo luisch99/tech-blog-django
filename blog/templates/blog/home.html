@@ -1,0 +1,14 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Inicio | TechBlog{% endblock %}
+
+{% block content %}
+    <h2>Bienvenido a TechBlog</h2>
+    <p style="text-align:center;">
+        Explora publicaciones sobre tecnología o crea una nueva entrada en el blog.
+    </p>
+    <br>
+    <p style="text-align:center;">
+        <a href="{% url 'lista_posts' %}" class="btn btn-blue">Ver publicaciones</a>
+    </p>
+{% endblock %}

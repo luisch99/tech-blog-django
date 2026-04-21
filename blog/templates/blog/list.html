@@ -1,0 +1,46 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Publicaciones | TechBlog{% endblock %}
+
+{% block content %}
+    <h2>Publicaciones recientes</h2>
+
+    <!-- 🔍 FORMULARIO DE BÚSQUEDA + FILTRO -->
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Buscar por título..." value="{{ query }}">
+
+        <select name="categoria">
+            <option value="">Todas las categorías</option>
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" 
+                    {% if categoria_seleccionada == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-blue">Buscar / Filtrar</button>
+    </form>
+
+    <!-- 📄 LISTA DE POSTS -->
+    {% for post in posts %}
+        <div class="post-card">
+            <h3>{{ post.titulo }}</h3>
+
+            <p><strong>Categoría:</strong> {{ post.categoria }}</p>
+            <p><strong>Autor:</strong> {{ post.autor }}</p>
+            <p><strong>Fecha:</strong> {{ post.fecha_publicacion }}</p>
+
+            <p>{{ post.resumen }}</p>
+
+            {% if user == post.autor %}
+                <a href="{% url 'editar_post' post.id %}" class="btn btn-blue">
+                    Editar
+                </a>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p style="text-align:center;">No hay publicaciones disponibles.</p>
+    {% endfor %}
+
+{% endblock %}

@@ -2,23 +2,185 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}TechBlog{% endblock %}</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+        }
+
+        header {
+            background-color: #1f2937;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            margin-bottom: 5px;
+        }
+
+        header p {
+            margin-bottom: 15px;
+            color: #d1d5db;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .btn-blue {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .btn-blue:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-red {
+            background-color: #dc2626;
+            color: white;
+        }
+
+        .btn-red:hover {
+            background-color: #b91c1c;
+        }
+
+        .user-text {
+            font-size: 13px;
+            color: #d1d5db;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #1f2937;
+            color: white;
+            padding: 15px;
+            margin-top: 40px;
+        }
+
+        .post-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+            background-color: #fafafa;
+        }
+
+        .search-form {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .message-error {
+            color: red;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>TechBlog</h1>
-        <p>Blog de tecnología</p>
-        <hr>
-    </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+<header>
+    <h1>TechBlog</h1>
+    <p>Blog de tecnología</p>
 
-    <footer>
-        <hr>
-        <p>Proyecto Django - Blog de Tecnología</p>
-    </footer>
+    <nav>
+        <div class="nav-left">
+            <a href="{% url 'home' %}">Inicio</a>
+            <a href="{% url 'lista_posts' %}">Publicaciones</a>
+
+            {% if user.is_authenticated and not user.is_superuser %}
+                <a href="{% url 'crear_post' %}">Crear publicación</a>
+            {% endif %}
+        </div>
+
+        <div class="nav-right">
+            {% if user.is_authenticated %}
+                <span class="user-text">👤 {{ user.username }}</span>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-red">Salir</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-blue">Login</a>
+                <a href="{% url 'registro' %}" class="btn btn-blue">Registro</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <p class="message-error">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+</div>
+
+<footer>
+    <p>Proyecto Django - Blog de Tecnología</p>
+</footer>
+
 </body>
 </html>

@@ -1,0 +1,18 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Login | TechBlog{% endblock %}
+
+{% block content %}
+    <h2>Iniciar sesión</h2>
+
+    <form method="post" style="max-width:400px; margin:auto;">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Usuario">
+        <input type="password" name="password" placeholder="Contraseña">
+        <button class="btn btn-blue" type="submit" style="width:100%;">Entrar</button>
+    </form>
+
+    <p style="text-align:center; margin-top:10px;">
+        ¿No tienes cuenta? <a href="{% url 'registro' %}">Regístrate</a>
+    </p>
+{% endblock %}
